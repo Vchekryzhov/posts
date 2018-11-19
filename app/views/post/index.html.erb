@@ -1,0 +1,33 @@
+<% flash.each do |key, message| %>
+  <p> <%= message unless message.empty? %> </p>
+<% end %>
+  <br>
+  <br>
+  <br>
+<%@posts.each do |post| %>
+  <a href="<%= post_path(post.id) %>"><h><%= post.title %></h> </a>
+  <p><%= post.text %></p>
+  <h><%= post.author.fname + " " +post.author.lname + " " + post.author.email  %></h>
+  <br>
+  <br>
+  <br>
+<% end %>
+
+<%= form_with model: @new_post, url: post_create_path do |f| %>
+  <%= label_tag("Заголовок") %>
+  <%= f.text_field :title %><br />
+  <%= label_tag("Текст") %>
+  <%= f.text_area :text %><br />
+  <%= label_tag("Опубликовать?") %>
+  <%= f.check_box :published %><br />
+
+  <%= f.fields_for :author do |author_form| %>
+    <%= label_tag("Имя автора") %>
+    <%= author_form.text_field :fname %><br />
+    <%= label_tag("Фамилия автора") %>
+    <%= author_form.text_field :lname %><br />
+    <%= label_tag("Email автора") %>
+    <%= author_form.text_field :email %><br />
+  <% end %>
+  <%= f.submit "Создать пост" %>
+<% end  %>

@@ -1,0 +1,19 @@
+<a href="<%= posts_path %>">На главную</a>
+<br>
+<% flash.each do |key, message| %>
+  <p> <%= message unless message.empty? %> </p>
+<% end %>
+  <h><%= @post.title %></h>
+  <p><%= @post.text %></p>
+  <br>
+  <h><%= @post.author.fname + " " +@post.author.lname %></h>
+
+<%= form_with model: @post, url: post_update_path(@post.id), method: :post do |f| %>
+  <%= label_tag("Заголовок") %>
+  <%= f.text_field :title %>
+  <%= label_tag("Текст") %>
+  <%= f.text_area :text %>
+  <%= label_tag("Опубликовать?") %>
+  <%= f.check_box :published %><br />
+  <%= f.submit "Обновить пост" %>
+<% end  %>
